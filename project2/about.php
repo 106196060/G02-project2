@@ -1,26 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About - Nexora</title>
-  <link rel="stylesheet" href="styles/styles.css">
-  <!-- GitHub Pages: https://dhuwaalghanim.github.io/G02 -->
-</head>
-<body class="about-page">
+<?php
+$page_title = "About - Nexora";
+$body_class = "about-page";
+$current_page = "about";
 
-  <header class="site-header">
-    <a href="index.html" class="brand-link">
-      <img src="./images/nexora_asset_pack_revised/logo/nexora-icon-only.svg" alt="Nexora Logo" class="brand-logo">
-      <span>Nexora</span>
-    </a>
-    <nav class="main-nav" aria-label="Main Navigation">
-      <a href="index.html">Home</a>
-      <a href="about.html" class="active">About</a>
-      <a href="jobs.html">Jobs</a>
-      <a href="apply.html">Apply</a>
-    </nav>
-  </header>
+include("header.inc");
+include("nav.inc");
+?>
+
 
   <main>
     <h1>Team Profile: Nexora</h1>
@@ -104,17 +90,4 @@
     </table>
   </main>
 
-  <footer class="site-footer">
-    <div>
-      <strong>Nexora</strong>
-      <p>Connecting communities to brighter digital futures.</p>
-    </div>
-    <p>Email: <a href="mailto:info@nexora.com">info@nexora.com</a></p>
-    <p>
-      <a href="https://jira.com" target="_blank">Jira Board</a> |
-      <a href="https://github.com/dhuwaalghanim/G02.git" target="_blank">GitHub Repository</a>
-    </p>
-  </footer>
-
-</body>
-</html>
+<?php include("footer.inc"); ?>

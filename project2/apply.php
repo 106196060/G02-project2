@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexora - Job Application Form (Submitted State)</title>
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-<body class="apply-page">
+<?php
+$page_title = "Nexora | Apply";
+$body_class = "apply-page";
+$current_page = "apply";
 
-  <header class="site-header">
-    <a href="index.html" class="brand-link">
-      <img src="./images/nexora_asset_pack_revised/logo/nexora-icon-only.svg" alt="Nexora Logo" class="brand-logo">
-      <span>Nexora</span>
-    </a>
-    <nav class="main-nav" aria-label="Main Navigation">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="jobs.html">Jobs</a>
-      <a href="apply.html" class="active">Apply</a>
-    </nav>
-  </header>
+include("header.inc");
+include("nav.inc");
+?>
+
+< class="form-container">
 
     <main class="form-container">
         <div class="success-banner" role="alert">
@@ -194,17 +182,4 @@
         </form>
     </main>
 
-    <footer class="site-footer">
-      <div>
-        <strong>Nexora</strong>
-        <p>Connecting communities to brighter digital futures.</p>
-      </div>
-      <p>Email: <a href="mailto:info@nexora.com">info@nexora.com</a></p>
-      <p>
-        <a href="https://jira.com" target="_blank">Jira Board</a> |
-        <a href="https://github.com/dhuwaalghanim/G02.git" target="_blank">GitHub Repository</a>
-      </p>
-    </footer>
-
-</body>
-</html>
+<?php include("footer.inc"); ?>

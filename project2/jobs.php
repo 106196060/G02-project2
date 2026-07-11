@@ -1,39 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Explore current career opportunities at Nexora.">
-    <meta name="keywords" content="Nexora, jobs, careers, digital inclusion, technology">
-    <meta name="author" content="Nexora Team">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php
+$page_title = "Nexora | Careers";
+$body_class = "jobs-page";
+$current_page = "jobs";
 
-    <title>Nexora | Careers</title>
+include("header.inc");
+include("nav.inc");
+?>
 
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-
-<body class="jobs-page">
-
-    <header class="site-header">
-        <a href="index.html" class="brand-link">
-            <img src="./images/nexora_asset_pack_revised/logo/nexora-icon-only.svg"
-                 alt="Nexora logo"
-                 class="brand-logo">
-            <span>Nexora</span>
-        </a>
-
-        <nav class="main-nav" aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="jobs.html" class="active">Jobs</a>
-            <a href="apply.html">Apply</a>
-            <a href="about.html">About</a>
-        </nav>
-
-        <a href="apply.html" class="nav-button">
-            Get Involved
-            <img src="styles/images/heart.png" alt="">
-        </a>
-    </header>
 
     <main>
 
@@ -95,7 +68,7 @@
                                 <h2>Digital Support Coordinator</h2>
                             </div>
 
-                            <a href="apply.html" class="heart-button" aria-label="Apply for Digital Support Coordinator">
+                            <a href="apply.php" class="heart-button" aria-label="Apply for Digital Support Coordinator">
                                 <img src="styles/images/heart.png" alt="">
                             </a>
                         </div>
@@ -141,7 +114,7 @@
                                 <h2>Web & Content Assistant</h2>
                             </div>
 
-                            <a href="apply.html" class="heart-button" aria-label="Apply for Web and Content Assistant">
+                            <a href="apply.php" class="heart-button" aria-label="Apply for Web and Content Assistant">
                                 <img src="styles/images/heart.png" alt="">
                             </a>
                         </div>
@@ -199,7 +172,7 @@
                         Get early updates about future roles, workshops, and digital opportunities.
                     </p>
 
-                    <a href="apply.html" class="talent-button">
+                    <a href="apply.php" class="talent-button">
                         Join Now
                         <img src="styles/images/arrow-right.png" alt="">
                     </a>
@@ -254,7 +227,7 @@
                     </section>
                 </div>
 
-                <a href="apply.html" class="primary-button">Apply for this role</a>
+                <a href="apply.php" class="primary-button">Apply for this role</a>
             </article>
 
             <article class="detail-card" id="web-content-details">
@@ -302,27 +275,9 @@
                     </section>
                 </div>
 
-                <a href="apply.html" class="primary-button">Apply for this role</a>
+                <a href="apply.php" class="primary-button">Apply for this role</a>
             </article>
         </section>
-    </main>
+</main>
 
-    <footer class="site-footer">
-        <div>
-            <strong>Nexora</strong>
-            <p>Connecting communities to brighter digital futures.</p>
-        </div>
-
-        <p>
-            Email:
-            <a href="mailto:info@nexora.com">info@nexora.com</a>
-        </p>
-
-        <p>
-            <a href="https://github.com/dhuwaalghanim/G02.git">GitHub Repository</a> |
-            <a href="https://dhuwaalghanim101.atlassian.net/jira/software/projects/SCRUM/boards/1">Jira Board</a>
-        </p>
-    </footer>
-
-</body>
-</html>
+<?php include("footer.inc"); ?>
