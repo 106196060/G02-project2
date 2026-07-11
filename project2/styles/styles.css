@@ -1,0 +1,781 @@
+/* ==========================================================================
+   NEXORA CORE STYLESHEET
+   Palette: Deep Navy (#0B1354), Cobalt Blue (#5B73F3), Digital Mint (#29E691)
+   ========================================================================== */
+
+/* 1. Global Reset & Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-dark: #0B1354;
+    --primary-blue: #5B73F3;
+    --accent-mint: #29E691;
+    --bg-light: #F8FAFC;
+    --text-muted: #64748B;
+    --white: #FFFFFF;
+    --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    --transition: all 0.3s ease;
+    --shadow: 0 4px 20px rgba(11, 19, 84, 0.08);
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-light);
+    color: var(--primary-dark);
+    line-height: 1.6;
+}
+
+/* 2. Typography & Headers */
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+/* Fancy bottom border matching the logo star element */
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--accent-mint));
+    border-radius: 2px;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: #334155;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(91, 115, 243, 0.2), transparent);
+    margin: 2.5rem 0;
+}
+
+/* 3. Navigation Header */
+.site-header {
+    background-color: var(--white);
+    padding: 1.25rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0.75rem;
+}
+
+.brand-link span {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.logo, .brand-logo {
+    max-height: 45px;
+    object-fit: contain;
+}
+
+/* Navigation Menus */
+nav {
+    display: flex;
+    background: var(--white);
+    padding: 0.5rem 5%;
+    gap: 1.5rem;
+}
+
+/* Support fallback nav container styling alongside premium flex layout */
+.main-nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding: 0;
+}
+
+nav a, .main-nav a {
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: var(--transition);
+}
+
+nav a:hover, .main-nav a:hover {
+    color: var(--primary-blue);
+}
+
+/* Active Indicator Animation */
+nav a.active::after, .main-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-blue);
+    border-radius: 2px;
+}
+
+nav a.active, .main-nav a.active {
+    color: var(--primary-blue);
+}
+
+/* Premium Button Links */
+.nav-button, .primary-button, .btn-submit, .talent-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-dark);
+    color: var(--white) !important;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(11, 19, 84, 0.15);
+}
+
+.nav-button:hover, .primary-button:hover, .btn-submit:hover, .talent-button:hover {
+    background-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(91, 115, 243, 0.3);
+}
+
+/* 4. Layout Layout Components (Main & Hero) */
+main {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+}
+
+.jobs-hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+.eyebrow {
+    color: var(--primary-blue);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.jobs-hero h1 span {
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-mint));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-image, .jobs-hero-visual img {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    object-fit: cover;
+}
+
+.job-icon img,
+.talent-icon,
+.fake-search img,
+.job-card-bottom img,
+.circle-arrow img,
+.heart-button img,
+.view-details img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.talent-icon {
+    width: 40px;
+    height: 40px;
+}
+
+/* Premium Aside Card styling */
+.why-card, .talent-box {
+    background: linear-gradient(135deg, var(--primary-dark), #16227a);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.why-card::before, .talent-box::before {
+    content: '★';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    font-size: 10rem;
+    color: rgba(41, 230, 145, 0.05);
+}
+
+.why-card h2, .talent-box h2 {
+    color: var(--accent-mint);
+    margin-bottom: 1rem;
+}
+.why-card h2::after, .talent-box h2::after { background: var(--accent-mint); }
+
+.why-card p, .talent-box p { color: #cbd5e1; }
+
+/* 5. Components: Cards & Filters */
+.job-filter-section {
+    display: flex;
+    gap: 1rem;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.fake-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-light);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 200px;
+    color: var(--text-muted);
+}
+
+.filter-box {
+    background: var(--bg-light);
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #e2e8f0;
+}
+
+.clear-filter {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+}
+.clear-filter:hover { color: var(--primary-blue); }
+
+/* Grid systems */
+.jobs-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2.5rem;
+}
+
+/* Individual Interactive Job Cards */
+.job-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 1.5rem;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.job-card:hover {
+    border-color: rgba(91, 115, 243, 0.3);
+    transform: translateY(-4px);
+}
+
+.job-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.green-icon { background-color: rgba(41, 230, 145, 0.15); }
+.blue-icon { background-color: rgba(91, 115, 243, 0.15); }
+
+.job-main-info { flex: 1; }
+
+.job-heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.job-reference {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.job-meta {
+    display: flex;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.skill-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem;
+    flex-wrap: wrap;
+}
+
+.skill-tags span {
+    background: var(--bg-light);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.job-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1rem;
+}
+
+.salary {
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.view-details {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Sidebar lists links */
+.sidebar-box {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-box a {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid #f1f5f9;
+    transition: var(--transition);
+}
+
+.sidebar-box a:hover {
+    color: var(--primary-blue);
+    padding-left: 4px;
+}
+
+/* 6. Professional Forms & Semantic Layouts */
+.form-container {
+    max-width: 750px;
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+fieldset {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    background-color: var(--white);
+}
+
+legend {
+    font-weight: 700;
+    padding: 0 0.75rem;
+    color: var(--primary-dark);
+    font-size: 1.1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 1rem;
+    background-color: var(--bg-light);
+    transition: var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(91, 115, 243, 0.15);
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.radio-group, .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.radio-group label, .checkbox-group label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+/* Sub-fieldset architecture matching team updates */
+.sub-fieldset {
+    border: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+
+/* 7. Tables, Lists & Structured Elements */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin: 2rem 0;
+}
+
+caption {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--primary-dark);
+    text-align: left;
+}
+
+th, td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: var(--bg-light);
+}
+
+tr:hover {
+    background-color: rgba(91, 115, 243, 0.04);
+}
+
+/* Academic Group/Member list layout profiles */
+dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+dt {
+    grid-column: 1 / -1;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-top: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.25rem;
+}
+
+dt:first-of-type { margin-top: 0; }
+
+dd {
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin: 0;
+}
+
+/* Differentiating semantic description lines elegantly */
+dd:has(blockquote), dd:nth-of-type(3n+2) {
+    font-style: italic;
+    border-left: 4px solid var(--accent-mint);
+}
+
+figure {
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    display: inline-block;
+    margin: 1.5rem 0;
+}
+
+figcaption {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
+/* 8. Sticky Footer layout */
+.site-footer, footer {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 3rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 5rem;
+}
+
+.site-footer p, footer p { color: #94a3b8; margin: 0; }
+
+.site-footer a, footer a {
+    color: var(--accent-mint);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.site-footer a:hover, footer a:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+/* 9. Responsive Adjustments */
+@media (max-width: 768px) {
+    .jobs-hero, .jobs-content {
+        grid-template-columns: 1fr;
+    }
+    .site-header, .site-footer, footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    .main-nav {
+        margin-top: 1rem;
+    }
+    .form-container {
+        padding: 1.5rem;
+    }
+}
+
+/* ==========================================================================
+   10. JOB APPLICATION SPECIFIC EXTENSIONS
+   ========================================================================== */
+
+/* Job Application Container Specifics */
+.job-app-container {
+    max-width: 850px;
+    margin: 4rem auto;
+}
+
+/* Application Progress Tracker */
+.app-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.app-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 4px;
+    background-color: #e2e8f0;
+    z-index: 1;
+}
+
+.progress-step {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+    transition: var(--transition);
+}
+
+.progress-step.active {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    box-shadow: 0 0 0 4px rgba(91, 115, 243, 0.2);
+}
+
+.progress-step.completed {
+    background-color: var(--accent-mint);
+    color: var(--primary-dark);
+}
+
+/* Premium Drag & Drop Resume Upload Zone */
+.file-upload-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: var(--bg-light);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.file-upload-zone:hover, .file-upload-zone.dragover {
+    border-color: var(--primary-blue);
+    background-color: rgba(91, 115, 243, 0.02);
+}
+
+.file-upload-icon {
+    font-size: 2rem;
+    color: var(--primary-blue);
+}
+
+.file-upload-zone input[type="file"] {
+    display: none;
+}
+
+/* Form Action Button Alignment Row */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-dark);
+    border: 1px solid #cbd5e1;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background-color: #f1f5f9;
+    border-color: var(--primary-dark);
+}
+
+/* Success Feedback Alert Boxes */
+.alert-success {
+    background-color: rgba(41, 230, 145, 0.1);
+    border-left: 4px solid var(--accent-mint);
+    color: #065f46;
+    padding: 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+/* Responsive fixes for App components */
+@media (max-width: 480px) {
+    .form-actions {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+    .form-actions button, .form-actions a {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Fix header button icon size */
+.nav-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.brand-logo {
+    width: 110px;
+    height: 60px;
+    object-fit: contain;
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora - Job Application Form (Submitted State)</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body class="apply-page">
+
+  <header class="site-header">
+    <a href="index.html" class="brand-link">
+      <img src="./images/nexora_asset_pack_revised/logo/nexora-icon-only.svg" alt="Nexora Logo" class="brand-logo">
+      <span>Nexora</span>
+    </a>
+    <nav class="main-nav" aria-label="Main Navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="apply.html" class="active">Apply</a>
+    </nav>
+  </header>
+
+    <main class="form-container">
+        <div class="success-banner" role="alert">
+            <h2>✓ Application Information Saved</h2>
+            <p>Your details have been registered. Review your completed information below.</p>
+        </div>
+
+        <h1>Job Application Form</h1>
+
+        <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="POST" class="application-form">
+            
+            <fieldset>
+                <legend>Position Details</legend>
+                
+                <div class="form-group">
+                    <label for="job-ref">Job Reference Number</label>
+                    <input 
+                        type="text" 
+                        id="job-ref" 
+                        name="job_ref" 
+                        required 
+                        pattern="^[a-zA-Z0-9]{5}$" 
+                        title="Exactly 5 alphanumeric characters"
+                        value="NX206"> <span class="hint">Exactly 5 alphanumeric characters</span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Personal Information</legend>
+
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input 
+                        type="text" 
+                        id="first-name" 
+                        name="first_name" 
+                        required 
+                        maxlength="20" 
+                        pattern="^[a-zA-Z\s]{1,20}$"
+                        title="Max 20 alpha characters"
+                        value="Alex"> <span class="hint">Max 20 alpha characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input 
+                        type="text" 
+                        id="last-name" 
+                        name="last_name" 
+                        required 
+                        maxlength="20" 
+                        pattern="^[a-zA-Z\s]{1,20}$"
+                        title="Max 20 alpha characters"
+                        value="Morgan"> <span class="hint">Max 20 alpha characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input 
+                        type="text" 
+                        id="dob" 
+                        name="dob" 
+                        required 
+                        pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$" 
+                        title="Format must be dd/mm/yyyy"
+                        value="15/08/1994"> <span class="hint">Format: dd/mm/yyyy</span>
+                </div>
+
+                <fieldset class="sub-fieldset">
+                    <legend>Gender</legend>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender" value="male" required> Male</label>
+                        <label><input type="radio" name="gender" value="female" required checked> Female</label> <label><input type="radio" name="gender" value="other" required> Other</label>
+                    </div>
+                </fieldset>
+            </fieldset>
+
+            <fieldset>
+                <legend>Address Details</legend>
+
+                <div class="form-group">
+                    <label for="street">Street Address</label>
+                    <input 
+                        type="text" 
+                        id="street" 
+                        name="street" 
+                        required 
+                        maxlength="40"
+                        value="102 Collins Street"> <span class="hint">Max 40 characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="suburb">Suburb/Town</label>
+                    <input 
+                        type="text" 
+                        id="suburb" 
+                        name="suburb" 
+                        required 
+                        maxlength="40"
+                        value="Melbourne"> <span class="hint">Max 40 characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select id="state" name="state" required>
+                        <option value="">Please select...</option>
+                        <option value="VIC" selected>VIC</option> <option value="NSW">NSW</option>
+                        <option value="QLD">QLD</option>
+                        <option value="NT">NT</option>
+                        <option value="WA">WA</option>
+                        <option value="SA">SA</option>
+                        <option value="TAS">TAS</option>
+                        <option value="ACT">ACT</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="postcode">Postcode</label>
+                    <input 
+                        type="text" 
+                        id="postcode" 
+                        name="postcode" 
+                        required 
+                        pattern="^\d{4}$" 
+                        title="Exactly 4 digits"
+                        value="3000"> <span class="hint">Exactly 4 digits</span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Contact & Skills</legend>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required
+                        value="alex.morgan@example.com"> <span class="hint">Valid email format</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input 
+                        type="text" 
+                        id="phone" 
+                        name="phone" 
+                        required 
+                        pattern="^\d{8,12}$" 
+                        title="Between 8 to 12 numerical digits"
+                        value="0412345678"> <span class="hint">8–12 digits</span>
+                </div>
+
+                <fieldset class="sub-fieldset">
+                    <legend>Skill List</legend>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="skills[]" value="html" checked> HTML / CSS</label> <label><input type="checkbox" name="skills[]" value="ui_ux"> UI/UX Design</label>
+                        <label><input type="checkbox" name="skills[]" value="accessibility" checked> Digital Accessibility</label> <label><input type="checkbox" name="skills[]" value="other_skills"> Other skills...</label>
+                    </div>
+                </fieldset>
+
+                <div class="form-group">
+                    <label for="other-skills-text">Describe Other Skills (Optional)</label>
+                    <textarea 
+                        id="other-skills-text" 
+                        name="other_skills_text" 
+                        rows="5">Experience working with WCAG 2.1 AA screen reader audits and semantic document trees.</textarea> </div>
+            </fieldset>
+
+            <button type="submit" class="btn-submit">Update Application Info</button>
+        </form>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Nexora</strong>
+        <p>Connecting communities to brighter digital futures.</p>
+      </div>
+      <p>Email: <a href="mailto:info@nexora.com">info@nexora.com</a></p>
+      <p>
+        <a href="https://jira.com" target="_blank">Jira Board</a> |
+        <a href="https://github.com/dhuwaalghanim/G02.git" target="_blank">GitHub Repository</a>
+      </p>
+    </footer>
+
+</body>
+</html>
