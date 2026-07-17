@@ -1,4 +1,36 @@
 <?php
+require_once("settings.php");
+
+$conn = mysqli_connect($host, $user, $pwd, $sql_db);
+
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+mysqli_set_charset($conn, "utf8mb4");
+
+$query = "SELECT * FROM jobs ORDER BY job_ref";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Error loading jobs: " . mysqli_error($conn));
+}
+
+/*
+    Store all jobs in an array.
+
+    We do this because the jobs are displayed twice:
+    1. In the main job cards.
+    2. In the detailed position sections.
+*/
+$jobs = [];
+
+while ($job = mysqli_fetch_assoc($result)) {
+    $jobs[] = $job;
+}
+
+$job_count = count($jobs);
+
 $page_title = "Nexora | Careers";
 $body_class = "jobs-page";
 $current_page = "jobs";
@@ -7,277 +39,373 @@ include("header.inc");
 include("nav.inc");
 ?>
 
+<main>
 
-    <main>
+    <section class="jobs-hero">
+        <div class="jobs-hero-text">
+            <p class="eyebrow">CAREERS WITH PURPOSE</p>
 
-        <section class="jobs-hero">
-            <div class="jobs-hero-text">
-                <p class="eyebrow">CAREERS WITH PURPOSE</p>
+            <h1>
+                Find your next<br>
+                <span>impact opportunity.</span>
+            </h1>
 
-                <h1>
-                    Find your next<br>
-                    <span>impact opportunity.</span>
-                </h1>
+            <p class="hero-description">
+                Join Nexora and help communities build stronger digital futures
+                through technology, support, and inclusive innovation.
+            </p>
+        </div>
 
-                <p class="hero-description">
-                    Join Nexora and help communities build stronger digital futures through technology, support, and inclusive innovation.
+        <div class="jobs-hero-visual">
+            <aside class="why-card">
+                <h2>Why Nexora?</h2>
+
+                <p>
+                    Technology can solve real problems and create a better
+                    future for everyone.
                 </p>
-            </div>
 
-            <div class="jobs-hero-visual">
-                <aside class="why-card">
-                    <h2>Why Nexora?</h2>
-
-                    <p>
-                        Technology can solve real problems and create a better future for everyone.
-                    </p>
-
-                    <a href="#job-list" class="circle-arrow" aria-label="View available roles">
-                        <img src="styles/images/arrow-right.png" alt="">
-                    </a>
-                </aside>
-            </div>
-        </section>
-
-        <section class="job-filter-section" aria-label="Role filters">
-            <div class="fake-search">
-                <img src="styles/images/search.png" alt="">
-                <span>Search roles or keywords...</span>
-            </div>
-
-            <div class="filter-box">All Roles <span>⌄</span></div>
-            <div class="filter-box">All Locations <span>⌄</span></div>
-            <div class="filter-box">All Types <span>⌄</span></div>
-
-            <a href="#job-list" class="clear-filter">Clear Filters</a>
-        </section>
-
-        <section class="jobs-content" id="job-list">
-
-            <div class="job-list-area">
-
-                <article class="job-card">
-                    <div class="job-icon green-icon">
-                        <img src="styles/images/leaf.png" alt="">
-                    </div>
-
-                    <div class="job-main-info">
-                        <div class="job-heading-row">
-                            <div>
-                                <p class="job-reference">REF: NX001</p>
-                                <h2>Digital Support Coordinator</h2>
-                            </div>
-
-                            <a href="apply.php" class="heart-button" aria-label="Apply for Digital Support Coordinator">
-                                <img src="styles/images/heart.png" alt="">
-                            </a>
-                        </div>
-
-                        <p class="organisation-name">Nexora Community Services</p>
-
-                        <div class="job-meta">
-                            <span>📍 Doha, Qatar </span>
-                            <span>◌ Full-time</span>
-                            <span>◷ Hybrid</span>
-                        </div>
-
-                        <p class="job-summary">
-                            Help community members and partner organisations build confidence using digital tools, online services, and everyday technology.
-                        </p>
-
-                        <div class="skill-tags">
-                            <span>Digital Skills</span>
-                            <span>Community Support</span>
-                            <span>Training</span>
-                        </div>
-
-                        <div class="job-card-bottom">
-                            <p class="salary">Salary: QAR58,000–QAR65,000</p>
-
-                            <a href="#digital-support-details" class="view-details">
-                                View Details
-                                <img src="styles/images/arrow-right.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="job-card">
-                    <div class="job-icon blue-icon">
-                        <img src="styles/images/laptop.png" alt="">
-                    </div>
-
-                    <div class="job-main-info">
-                        <div class="job-heading-row">
-                            <div>
-                                <p class="job-reference">REF: NX002</p>
-                                <h2>Web & Content Assistant</h2>
-                            </div>
-
-                            <a href="apply.php" class="heart-button" aria-label="Apply for Web and Content Assistant">
-                                <img src="styles/images/heart.png" alt="">
-                            </a>
-                        </div>
-
-                        <p class="organisation-name">Nexora Community Services</p>
-
-                        <div class="job-meta">
-                            <span>📍 Doha, Qatar </span>
-                            <span>◌ Part-time</span>
-                            <span>◷ Flexible</span>
-                        </div>
-
-                        <p class="job-summary">
-                            Support Nexora’s digital presence by updating website content, creating accessible resources, and helping share community stories online.
-                        </p>
-
-                        <div class="skill-tags">
-                            <span>HTML & CSS</span>
-                            <span>Content Writing</span>
-                            <span>Accessibility</span>
-                        </div>
-
-                        <div class="job-card-bottom">
-                            <p class="salary">Salary: QAR52,000–QAR58,000 pro rata</p>
-
-                            <a href="#web-content-details" class="view-details">
-                                View Details
-                                <img src="styles/images/arrow-right.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <p class="job-count">Showing 2 of 2 available opportunities</p>
-            </div>
-
-            <aside class="jobs-sidebar">
-                <section class="sidebar-box">
-                    <h2>Explore Roles</h2>
-
-                    <a href="#digital-support-details">Digital Support <span>›</span></a>
-                    <a href="#web-content-details">Web & Content <span>›</span></a>
-                    <a href="#digital-support-details">Community <span>›</span></a>
-                    <a href="#web-content-details">Technology <span>›</span></a>
-                </section>
-
-                <section class="talent-box">
-                    <img src="styles/images/users.png"
-                         alt=""
-                         class="talent-icon">
-
-                    <h2>Join our talent community</h2>
-
-                    <p>
-                        Get early updates about future roles, workshops, and digital opportunities.
-                    </p>
-
-                    <a href="apply.php" class="talent-button">
-                        Join Now
-                        <img src="styles/images/arrow-right.png" alt="">
-                    </a>
-                </section>
+                <a
+                    href="#job-list"
+                    class="circle-arrow"
+                    aria-label="View available roles"
+                >
+                    <img
+                        src="styles/images/arrow-right.png"
+                        alt=""
+                    >
+                </a>
             </aside>
-        </section>
+        </div>
+    </section>
 
-        <section class="position-details">
+    <section
+        class="job-filter-section"
+        aria-label="Role filters"
+    >
+        <div class="fake-search">
+            <img
+                src="styles/images/search.png"
+                alt=""
+            >
 
-            <article class="detail-card" id="digital-support-details">
-                <p class="eyebrow">POSITION DETAILS</p>
+            <span>Search roles or keywords...</span>
+        </div>
 
-                <h2>Digital Support Coordinator</h2>
+        <div class="filter-box">
+            All Roles <span>⌄</span>
+        </div>
+
+        <div class="filter-box">
+            All Locations <span>⌄</span>
+        </div>
+
+        <div class="filter-box">
+            All Types <span>⌄</span>
+        </div>
+
+        <a
+            href="#job-list"
+            class="clear-filter"
+        >
+            Clear Filters
+        </a>
+    </section>
+
+    <section
+        class="jobs-content"
+        id="job-list"
+    >
+
+        <div class="job-list-area">
+
+            <?php if ($job_count > 0): ?>
+
+                <?php foreach ($jobs as $job): ?>
+
+                    <?php
+                    $details_id = "job-" . strtolower($job["job_ref"]) . "-details";
+
+                    $essential_items = array_filter(
+                        explode("|", $job["essential_requirements"])
+                    );
+
+                    $skill_tags = array_slice($essential_items, 0, 3);
+                    ?>
+
+                    <article class="job-card">
+
+                        <div class="job-icon <?= htmlspecialchars($job["icon_colour"]) ?>">
+                            <img
+                                src="styles/images/<?= htmlspecialchars($job["icon"]) ?>"
+                                alt=""
+                            >
+                        </div>
+
+                        <div class="job-main-info">
+
+                            <div class="job-heading-row">
+
+                                <div>
+                                    <p class="job-reference">
+                                        REF:
+                                        <?= htmlspecialchars($job["job_ref"]) ?>
+                                    </p>
+
+                                    <h2>
+                                        <?= htmlspecialchars($job["job_title"]) ?>
+                                    </h2>
+                                </div>
+
+                                <a
+                                    href="apply.php?job_ref=<?= urlencode($job["job_ref"]) ?>"
+                                    class="heart-button"
+                                    aria-label="Apply for <?= htmlspecialchars($job["job_title"]) ?>"
+                                >
+                                    <img
+                                        src="styles/images/heart.png"
+                                        alt=""
+                                    >
+                                </a>
+
+                            </div>
+
+                            <p class="organisation-name">
+                                <?= htmlspecialchars($job["organisation"]) ?>
+                            </p>
+
+                            <div class="job-meta">
+                                <span>
+                                    📍 <?= htmlspecialchars($job["location"]) ?>
+                                </span>
+
+                                <span>
+                                    ◌ <?= htmlspecialchars($job["employment_type"]) ?>
+                                </span>
+
+                                <span>
+                                    ◷ <?= htmlspecialchars($job["work_type"]) ?>
+                                </span>
+                            </div>
+
+                            <p class="job-summary">
+                                <?= htmlspecialchars($job["summary"]) ?>
+                            </p>
+
+                            <?php if (!empty($skill_tags)): ?>
+
+                                <div class="skill-tags">
+
+                                    <?php foreach ($skill_tags as $tag): ?>
+                                        <span>
+                                            <?= htmlspecialchars(trim($tag)) ?>
+                                        </span>
+                                    <?php endforeach; ?>
+
+                                </div>
+
+                            <?php endif; ?>
+
+                            <div class="job-card-bottom">
+
+                                <p class="salary">
+                                    Salary:
+                                    <?= htmlspecialchars($job["salary"]) ?>
+                                </p>
+
+                                <a
+                                    href="#<?= htmlspecialchars($details_id) ?>"
+                                    class="view-details"
+                                >
+                                    View Details
+
+                                    <img
+                                        src="styles/images/arrow-right.png"
+                                        alt=""
+                                    >
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                <?php endforeach; ?>
+
+                <p class="job-count">
+                    Showing <?= $job_count ?> of
+                    <?= $job_count ?> available opportunities
+                </p>
+
+            <?php else: ?>
+
+                <p class="job-count">
+                    There are currently no available opportunities.
+                </p>
+
+            <?php endif; ?>
+
+        </div>
+
+        <aside class="jobs-sidebar">
+
+            <section class="sidebar-box">
+                <h2>Explore Roles</h2>
+
+                <?php foreach ($jobs as $job): ?>
+
+                    <?php
+                    $details_id = "job-" . strtolower($job["job_ref"]) . "-details";
+                    ?>
+
+                    <a href="#<?= htmlspecialchars($details_id) ?>">
+                        <?= htmlspecialchars($job["job_title"]) ?>
+                        <span>›</span>
+                    </a>
+
+                <?php endforeach; ?>
+
+            </section>
+
+            <section class="talent-box">
+
+                <img
+                    src="styles/images/users.png"
+                    alt=""
+                    class="talent-icon"
+                >
+
+                <h2>Join our talent community</h2>
 
                 <p>
-                    The Digital Support Coordinator works directly with community members, volunteers, and partner organisations to improve digital confidence and access to online services.
+                    Get early updates about future roles, workshops,
+                    and digital opportunities.
+                </p>
+
+                <a
+                    href="apply.php"
+                    class="talent-button"
+                >
+                    Join Now
+
+                    <img
+                        src="styles/images/arrow-right.png"
+                        alt=""
+                    >
+                </a>
+
+            </section>
+
+        </aside>
+
+    </section>
+
+    <section class="position-details">
+
+        <?php foreach ($jobs as $job): ?>
+
+            <?php
+            $details_id = "job-" . strtolower($job["job_ref"]) . "-details";
+
+            $responsibilities = array_filter(
+                explode("|", $job["responsibilities"])
+            );
+
+            $essential_requirements = array_filter(
+                explode("|", $job["essential_requirements"])
+            );
+
+            $preferable_requirements = array_filter(
+                explode("|", $job["preferable_requirements"])
+            );
+            ?>
+
+            <article
+                class="detail-card"
+                id="<?= htmlspecialchars($details_id) ?>"
+            >
+
+                <p class="eyebrow">POSITION DETAILS</p>
+
+                <h2>
+                    <?= htmlspecialchars($job["job_title"]) ?>
+                </h2>
+
+                <p>
+                    <?= htmlspecialchars($job["summary"]) ?>
                 </p>
 
                 <div class="detail-grid">
+
                     <section>
                         <h3>Reporting line</h3>
-                        <p>Reports to the Digital Inclusion Manager.</p>
+
+                        <p>
+                            <?= htmlspecialchars($job["reporting_line"]) ?>
+                        </p>
                     </section>
 
                     <section>
                         <h3>Key responsibilities</h3>
+
                         <ol>
-                            <li>Deliver beginner-friendly digital skills sessions.</li>
-                            <li>Support community members using online tools and services.</li>
-                            <li>Create simple digital guides and learning resources.</li>
-                            <li>Coordinate with volunteers during workshops.</li>
+                            <?php foreach ($responsibilities as $responsibility): ?>
+
+                                <li>
+                                    <?= htmlspecialchars(trim($responsibility)) ?>
+                                </li>
+
+                            <?php endforeach; ?>
                         </ol>
                     </section>
 
                     <section>
                         <h3>Essential requirements</h3>
+
                         <ul>
-                            <li>Strong communication and people skills.</li>
-                            <li>Confidence using common digital tools.</li>
-                            <li>Ability to explain technology clearly.</li>
-                            <li>Commitment to inclusive community support.</li>
+                            <?php foreach ($essential_requirements as $requirement): ?>
+
+                                <li>
+                                    <?= htmlspecialchars(trim($requirement)) ?>
+                                </li>
+
+                            <?php endforeach; ?>
                         </ul>
                     </section>
 
                     <section>
                         <h3>Preferable requirements</h3>
+
                         <ul>
-                            <li>Experience in training, tutoring, or customer support.</li>
-                            <li>Knowledge of accessibility or digital inclusion.</li>
-                            <li>Experience working with volunteers.</li>
+                            <?php foreach ($preferable_requirements as $requirement): ?>
+
+                                <li>
+                                    <?= htmlspecialchars(trim($requirement)) ?>
+                                </li>
+
+                            <?php endforeach; ?>
                         </ul>
                     </section>
+
                 </div>
 
-                <a href="apply.php" class="primary-button">Apply for this role</a>
+                <a
+                    href="apply.php?job_ref=<?= urlencode($job["job_ref"]) ?>"
+                    class="primary-button"
+                >
+                    Apply for this role
+                </a>
+
             </article>
 
-            <article class="detail-card" id="web-content-details">
-                <p class="eyebrow">POSITION DETAILS</p>
+        <?php endforeach; ?>
 
-                <h2>Web & Content Assistant</h2>
+    </section>
 
-                <p>
-                    The Web & Content Assistant supports Nexora’s online presence by maintaining clear, accessible website content and helping communicate the impact of community technology programmes.
-                </p>
-
-                <div class="detail-grid">
-                    <section>
-                        <h3>Reporting line</h3>
-                        <p>Reports to the Digital Communications Officer.</p>
-                    </section>
-
-                    <section>
-                        <h3>Key responsibilities</h3>
-                        <ol>
-                            <li>Update website pages using HTML and CSS.</li>
-                            <li>Check web content for clarity and accessibility.</li>
-                            <li>Prepare simple digital content for campaigns.</li>
-                            <li>Support the team with online community resources.</li>
-                        </ol>
-                    </section>
-
-                    <section>
-                        <h3>Essential requirements</h3>
-                        <ul>
-                            <li>Basic HTML and CSS knowledge.</li>
-                            <li>Strong written communication skills.</li>
-                            <li>Attention to detail and organisation.</li>
-                            <li>Interest in accessible digital design.</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>Preferable requirements</h3>
-                        <ul>
-                            <li>Experience using Canva or similar design tools.</li>
-                            <li>Basic social media content experience.</li>
-                            <li>Understanding of website accessibility guidelines.</li>
-                        </ul>
-                    </section>
-                </div>
-
-                <a href="apply.php" class="primary-button">Apply for this role</a>
-            </article>
-        </section>
 </main>
 
-<?php include("footer.inc"); ?>
+<?php
+mysqli_close($conn);
+include("footer.inc");
+?>
