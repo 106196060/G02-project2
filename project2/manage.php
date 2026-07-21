@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+/*
+    COS10026 Web Technology Project Part 2
+    Manager page for Expressions of Interest.
+*/
+
 /* Protect the page */
 if (
     !isset($_SESSION["admin_logged_in"]) ||
@@ -20,7 +25,10 @@ if (!$conn) {
 
 mysqli_set_charset($conn, "utf8mb4");
 
-$page_title = "Manage EOIs";
+$page_title = "Nexora | Manage EOIs";
+$body_class = "manage-page";
+$current_page = "";
+
 $message = "";
 $error_message = "";
 
@@ -29,12 +37,24 @@ $error_message = "";
    ========================================================= */
 
 if (isset($_POST["update_status"])) {
-    $eoi_number = filter_input(INPUT_POST, "eoi_number", FILTER_VALIDATE_INT);
+    $eoi_number = filter_input(
+        INPUT_POST,
+        "eoi_number",
+        FILTER_VALIDATE_INT
+    );
+
     $new_status = trim($_POST["new_status"] ?? "");
 
-    $allowed_statuses = ["New", "Current", "Final"];
+    $allowed_statuses = [
+        "New",
+        "Current",
+        "Final"
+    ];
 
-    if (!$eoi_number || !in_array($new_status, $allowed_statuses, true)) {
+    if (
+        !$eoi_number ||
+        !in_array($new_status, $allowed_statuses, true)
+    ) {
         $error_message = "Invalid EOI number or status.";
     } else {
         $update_sql = "
@@ -73,10 +93,13 @@ if (isset($_POST["update_status"])) {
    ========================================================= */
 
 if (isset($_POST["delete_by_job"])) {
-    $delete_job_ref = strtoupper(trim($_POST["delete_job_ref"] ?? ""));
+    $delete_job_ref = strtoupper(
+        trim($_POST["delete_job_ref"] ?? "")
+    );
 
     if (!preg_match("/^[A-Z]{2}[0-9]{3}$/", $delete_job_ref)) {
-        $error_message = "Enter a valid job reference such as NX001.";
+        $error_message =
+            "Enter a valid job reference such as NX001.";
     } else {
         $delete_sql = "
             DELETE FROM eoi
@@ -94,7 +117,8 @@ if (isset($_POST["delete_by_job"])) {
 
             mysqli_stmt_execute($delete_stmt);
 
-            $deleted_rows = mysqli_stmt_affected_rows($delete_stmt);
+            $deleted_rows =
+                mysqli_stmt_affected_rows($delete_stmt);
 
             if ($deleted_rows > 0) {
                 $message =
@@ -111,7 +135,8 @@ if (isset($_POST["delete_by_job"])) {
 
             mysqli_stmt_close($delete_stmt);
         } else {
-            $error_message = "Unable to delete the EOI applications.";
+            $error_message =
+                "Unable to delete the EOI applications.";
         }
     }
 }
@@ -130,8 +155,7 @@ $allowed_sort_fields = [
     "job_ref",
     "first_name",
     "last_name",
-    "status",
-    "submitted_at"
+    "status"
 ];
 
 if (!in_array($sort, $allowed_sort_fields, true)) {
@@ -139,6 +163,7 @@ if (!in_array($sort, $allowed_sort_fields, true)) {
 }
 
 $sql = "SELECT * FROM eoi WHERE 1 = 1";
+
 $params = [];
 $types = "";
 
@@ -169,7 +194,11 @@ if (!$stmt) {
 }
 
 if (!empty($params)) {
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    mysqli_stmt_bind_param(
+        $stmt,
+        $types,
+        ...$params
+    );
 }
 
 mysqli_stmt_execute($stmt);
@@ -179,32 +208,15 @@ $result = mysqli_stmt_get_result($stmt);
 if (!$result) {
     die("Unable to load EOI records.");
 }
+
+include("header.inc");
+include("nav.inc");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        <?php echo htmlspecialchars($page_title); ?> | Nexora
-    </title>
-
-    <link rel="stylesheet" href="styles/styles.css">
-</head>
-
-<body>
-
-<main>
+<main class="manage-container">
 
     <section>
-        <p>HR PORTAL</p>
+        <p class="eyebrow">HR PORTAL</p>
 
         <h1>Manage Expressions of Interest</h1>
 
@@ -213,7 +225,7 @@ if (!$result) {
             <strong>
                 <?php
                 echo htmlspecialchars(
-                    $_SESSION["admin_username"]
+                    $_SESSION["admin_username"] ?? "Admin"
                 );
                 ?>
             </strong>
@@ -225,15 +237,19 @@ if (!$result) {
     </section>
 
     <?php if ($message !== ""): ?>
+
         <p class="success-message">
             <?php echo htmlspecialchars($message); ?>
         </p>
+
     <?php endif; ?>
 
     <?php if ($error_message !== ""): ?>
+
         <p class="error-message">
             <?php echo htmlspecialchars($error_message); ?>
         </p>
+
     <?php endif; ?>
 
     <section>
@@ -241,7 +257,7 @@ if (!$result) {
 
         <form action="manage.php" method="get">
 
-            <div>
+            <div class="form-group">
                 <label for="job_ref">
                     Job Reference
                 </label>
@@ -250,12 +266,14 @@ if (!$result) {
                     type="text"
                     id="job_ref"
                     name="job_ref"
-                    value="<?php echo htmlspecialchars($job_ref); ?>"
+                    value="<?php
+                    echo htmlspecialchars($job_ref);
+                    ?>"
                     placeholder="Example: NX001"
                 >
             </div>
 
-            <div>
+            <div class="form-group">
                 <label for="first_name">
                     First Name
                 </label>
@@ -264,11 +282,13 @@ if (!$result) {
                     type="text"
                     id="first_name"
                     name="first_name"
-                    value="<?php echo htmlspecialchars($first_name); ?>"
+                    value="<?php
+                    echo htmlspecialchars($first_name);
+                    ?>"
                 >
             </div>
 
-            <div>
+            <div class="form-group">
                 <label for="last_name">
                     Last Name
                 </label>
@@ -277,12 +297,16 @@ if (!$result) {
                     type="text"
                     id="last_name"
                     name="last_name"
-                    value="<?php echo htmlspecialchars($last_name); ?>"
+                    value="<?php
+                    echo htmlspecialchars($last_name);
+                    ?>"
                 >
             </div>
 
-            <div>
-                <label for="sort">Sort By</label>
+            <div class="form-group">
+                <label for="sort">
+                    Sort By
+                </label>
 
                 <select id="sort" name="sort">
 
@@ -341,23 +365,16 @@ if (!$result) {
                         Status
                     </option>
 
-                    <option
-                        value="submitted_at"
-                        <?php
-                        if ($sort === "submitted_at") {
-                            echo "selected";
-                        }
-                        ?>
-                    >
-                        Submission Date
-                    </option>
-
                 </select>
             </div>
 
-            <button type="submit">Search</button>
+            <button type="submit">
+                Search
+            </button>
 
-            <a href="manage.php">Clear Filters</a>
+            <a href="manage.php">
+                Clear Filters
+            </a>
 
         </form>
     </section>
@@ -366,16 +383,12 @@ if (!$result) {
         <h2>Delete EOIs by Job Reference</h2>
 
         <p>
-            This deletes every application submitted for the selected job.
+            This deletes every application submitted for
+            the selected job.
         </p>
 
-        <form
-            action="manage.php"
-            method="post"
-            onsubmit="return confirm(
-                'Delete every EOI for this job reference?'
-            );"
-        >
+        <form action="manage.php" method="post">
+
             <label for="delete_job_ref">
                 Job Reference
             </label>
@@ -393,6 +406,7 @@ if (!$result) {
             >
                 Delete EOIs
             </button>
+
         </form>
     </section>
 
@@ -412,7 +426,6 @@ if (!$result) {
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Status</th>
-                            <th>Submitted</th>
                             <th>Update Status</th>
                         </tr>
                     </thead>
@@ -473,14 +486,6 @@ if (!$result) {
                             </td>
 
                             <td>
-                                <?php
-                                echo htmlspecialchars(
-                                    $row["submitted_at"]
-                                );
-                                ?>
-                            </td>
-
-                            <td>
                                 <form
                                     action="manage.php"
                                     method="post"
@@ -516,7 +521,10 @@ if (!$result) {
                                         <option
                                             value="New"
                                             <?php
-                                            if ($row["status"] === "New") {
+                                            if (
+                                                $row["status"] ===
+                                                "New"
+                                            ) {
                                                 echo "selected";
                                             }
                                             ?>
@@ -527,7 +535,10 @@ if (!$result) {
                                         <option
                                             value="Current"
                                             <?php
-                                            if ($row["status"] === "Current") {
+                                            if (
+                                                $row["status"] ===
+                                                "Current"
+                                            ) {
                                                 echo "selected";
                                             }
                                             ?>
@@ -538,7 +549,10 @@ if (!$result) {
                                         <option
                                             value="Final"
                                             <?php
-                                            if ($row["status"] === "Final") {
+                                            if (
+                                                $row["status"] ===
+                                                "Final"
+                                            ) {
                                                 echo "selected";
                                             }
                                             ?>
@@ -566,18 +580,20 @@ if (!$result) {
 
         <?php else: ?>
 
-            <p>No matching EOI applications were found.</p>
+            <p>
+                No matching EOI applications were found.
+            </p>
 
         <?php endif; ?>
+
     </section>
 
 </main>
-
-</body>
-</html>
 
 <?php
 mysqli_free_result($result);
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
+
+include("footer.inc");
 ?>

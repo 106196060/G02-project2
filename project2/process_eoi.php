@@ -329,8 +329,34 @@ if (!$conn) {
         "The application could not connect to the database.";
 } else {
     mysqli_set_charset($conn, "utf8mb4");
-}
 
+    /* Create the EOI table if it does not already exist */
+    $create_eoi_table_sql = "
+        CREATE TABLE IF NOT EXISTS eoi (
+            EOInumber INT AUTO_INCREMENT PRIMARY KEY,
+            job_ref VARCHAR(5) NOT NULL,
+            first_name VARCHAR(20) NOT NULL,
+            last_name VARCHAR(20) NOT NULL,
+            date_of_birth DATE NOT NULL,
+            gender VARCHAR(10) NOT NULL,
+            street_address VARCHAR(40) NOT NULL,
+            suburb_town VARCHAR(40) NOT NULL,
+            state VARCHAR(3) NOT NULL,
+            postcode VARCHAR(4) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            phone VARCHAR(12) NOT NULL,
+            skills VARCHAR(255) NOT NULL,
+            other_skills VARCHAR(500),
+            status ENUM('New', 'Current', 'Final')
+                NOT NULL DEFAULT 'New'
+        )
+    ";
+
+    if (!mysqli_query($conn, $create_eoi_table_sql)) {
+        $errors[] =
+            "The EOI table could not be created.";
+    }
+}
 /* ---------------------------------------------------------
    CHECK THAT JOB EXISTS
    --------------------------------------------------------- */

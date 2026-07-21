@@ -25,8 +25,7 @@
     This project was developed by Group 2 for COS10026.
     Icons and graphics were created by the team or adapted from
     appropriately licensed resources.
-    Generative AI was used for brainstorming, debugging and code review,
-    with all final code reviewed and tested by the group.
+
 </p>
 </footer>
 
