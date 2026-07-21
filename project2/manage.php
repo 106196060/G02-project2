@@ -27,7 +27,7 @@ mysqli_set_charset($conn, "utf8mb4");
 
 $page_title = "Nexora | Manage EOIs";
 $body_class = "manage-page";
-$current_page = "";
+$current_page = "manage";
 
 $message = "";
 $error_message = "";

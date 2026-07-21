@@ -53,6 +53,13 @@ if (!isset($current_page)) {
             About
         </a>
 
+        <a
+             href="manage.php"
+             class="<?php echo $current_page === 'manage' ? 'active' : ''; ?>"
+        >
+             Manage
+</a>
+
     </nav>
 
     <a href="apply.php" class="nav-button">
