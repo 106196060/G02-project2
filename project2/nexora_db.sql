@@ -140,11 +140,7 @@ ON DUPLICATE KEY UPDATE
 
 
 /* =========================================================
-   3. EOI TABLE — ELIJAH
-   Required status values:
-   New, Current, Final
-
-   New applications automatically receive status New.
+   3. EOI TABLE
    ========================================================= */
 
 CREATE TABLE IF NOT EXISTS eoi (
@@ -177,16 +173,9 @@ CREATE TABLE IF NOT EXISTS eoi (
     INDEX idx_eoi_job_ref (job_ref),
     INDEX idx_eoi_first_name (first_name),
     INDEX idx_eoi_last_name (last_name),
-    INDEX idx_eoi_status (status),
-
-    CONSTRAINT fk_eoi_job
-        FOREIGN KEY (job_ref)
-        REFERENCES jobs(job_ref)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+    INDEX idx_eoi_status (status)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 /* =========================================================
    4. ABOUT / MEMBER CONTRIBUTIONS TABLE — FAISAL

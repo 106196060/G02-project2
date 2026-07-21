@@ -1,4 +1,5 @@
 <?php
+<!-- Main website navigation -->
 if (!isset($current_page)) {
     $current_page = "";
 }

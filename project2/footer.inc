@@ -10,9 +10,24 @@
     </p>
 
     <p>
-        <a href="https://github.com/dhuwaalghanim/G02-project2" target="_blank">GitHub Repository</a> |
-        <a href="https://jira.com" target="_blank">Jira Board</a>
-    </p>
+    <a href="https://github.com/dhuwaalghanim/G02-project2" target="_blank">
+        GitHub Repository
+    </a>
+</p>
+
+<p>
+    Jira Board:
+    Group Project Management
+</p>
+
+<p class="acknowledgement">
+    Acknowledgement:
+    This project was developed by Group 2 for COS10026.
+    Icons and graphics were created by the team or adapted from
+    appropriately licensed resources.
+    Generative AI was used for brainstorming, debugging and code review,
+    with all final code reviewed and tested by the group.
+</p>
 </footer>
 
 </body>

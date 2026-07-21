@@ -9,6 +9,39 @@ if (!$conn) {
 
 mysqli_set_charset($conn, "utf8mb4");
 
+/*
+ * Looks for an image in both image folders.
+ * If the database says leaf.svg but only leaf.png exists,
+ * it will also try the other extension.
+ */
+function find_image_path(string $image_name): ?string
+{
+    $image_name = basename(trim($image_name));
+
+    if ($image_name === "") {
+        return null;
+    }
+
+    $base_name = pathinfo($image_name, PATHINFO_FILENAME);
+
+    $possible_files = [
+        "styles/images/" . $image_name,
+        "images/" . $image_name,
+        "styles/images/" . $base_name . ".png",
+        "styles/images/" . $base_name . ".svg",
+        "images/" . $base_name . ".png",
+        "images/" . $base_name . ".svg"
+    ];
+
+    foreach ($possible_files as $file) {
+        if (is_file(__DIR__ . "/" . $file)) {
+            return $file;
+        }
+    }
+
+    return null;
+}
+
 $query = "SELECT * FROM jobs ORDER BY job_ref";
 $result = mysqli_query($conn, $query);
 
@@ -17,17 +50,18 @@ if (!$result) {
 }
 
 /*
-    Store all jobs in an array.
-
-    We do this because the jobs are displayed twice:
-    1. In the main job cards.
-    2. In the detailed position sections.
-*/
+ * Store jobs in an array because they are used more than once:
+ * 1. Main job cards
+ * 2. Sidebar links
+ * 3. Position detail sections
+ */
 $jobs = [];
 
 while ($job = mysqli_fetch_assoc($result)) {
     $jobs[] = $job;
 }
+
+mysqli_free_result($result);
 
 $job_count = count($jobs);
 
@@ -42,8 +76,12 @@ include("nav.inc");
 <main>
 
     <section class="jobs-hero">
+
         <div class="jobs-hero-text">
-            <p class="eyebrow">CAREERS WITH PURPOSE</p>
+
+            <p class="eyebrow">
+                CAREERS WITH PURPOSE
+            </p>
 
             <h1>
                 Find your next<br>
@@ -54,10 +92,13 @@ include("nav.inc");
                 Join Nexora and help communities build stronger digital futures
                 through technology, support, and inclusive innovation.
             </p>
+
         </div>
 
         <div class="jobs-hero-visual">
+
             <aside class="why-card">
+
                 <h2>Why Nexora?</h2>
 
                 <p>
@@ -75,21 +116,29 @@ include("nav.inc");
                         alt=""
                     >
                 </a>
+
             </aside>
+
         </div>
+
     </section>
 
     <section
         class="job-filter-section"
         aria-label="Role filters"
     >
+
         <div class="fake-search">
+
             <img
                 src="styles/images/search.png"
                 alt=""
             >
 
-            <span>Search roles or keywords...</span>
+            <span>
+                Search roles or keywords...
+            </span>
+
         </div>
 
         <div class="filter-box">
@@ -110,6 +159,7 @@ include("nav.inc");
         >
             Clear Filters
         </a>
+
     </section>
 
     <section
@@ -124,22 +174,58 @@ include("nav.inc");
                 <?php foreach ($jobs as $job): ?>
 
                     <?php
-                    $details_id = "job-" . strtolower($job["job_ref"]) . "-details";
+                    $details_id =
+                        "job-" .
+                        strtolower($job["job_ref"]) .
+                        "-details";
 
                     $essential_items = array_filter(
-                        explode("|", $job["essential_requirements"])
+                        explode(
+                            "|",
+                            $job["essential_requirements"]
+                        )
                     );
 
-                    $skill_tags = array_slice($essential_items, 0, 3);
+                    $skill_tags = array_slice(
+                        $essential_items,
+                        0,
+                        3
+                    );
+
+                    $job_icon_path = find_image_path(
+                        $job["icon"] ?? ""
+                    );
                     ?>
 
                     <article class="job-card">
 
-                        <div class="job-icon <?= htmlspecialchars($job["icon_colour"]) ?>">
-                            <img
-                                src="styles/images/<?= htmlspecialchars($job["icon"]) ?>"
-                                alt=""
-                            >
+                        <div
+                            class="job-icon <?= htmlspecialchars(
+                                $job["icon_colour"]
+                            ) ?>"
+                        >
+
+                            <?php if ($job_icon_path !== null): ?>
+
+                                <img
+                                    src="<?= htmlspecialchars(
+                                        $job_icon_path
+                                    ) ?>"
+                                    alt=""
+                                    aria-hidden="true"
+                                >
+
+                            <?php else: ?>
+
+                                <span
+                                    class="job-icon-fallback"
+                                    aria-hidden="true"
+                                >
+                                    ✦
+                                </span>
+
+                            <?php endif; ?>
+
                         </div>
 
                         <div class="job-main-info">
@@ -147,20 +233,30 @@ include("nav.inc");
                             <div class="job-heading-row">
 
                                 <div>
+
                                     <p class="job-reference">
                                         REF:
-                                        <?= htmlspecialchars($job["job_ref"]) ?>
+                                        <?= htmlspecialchars(
+                                            $job["job_ref"]
+                                        ) ?>
                                     </p>
 
                                     <h2>
-                                        <?= htmlspecialchars($job["job_title"]) ?>
+                                        <?= htmlspecialchars(
+                                            $job["job_title"]
+                                        ) ?>
                                     </h2>
+
                                 </div>
 
                                 <a
-                                    href="apply.php?job_ref=<?= urlencode($job["job_ref"]) ?>"
+                                    href="apply.php?job_ref=<?= urlencode(
+                                        $job["job_ref"]
+                                    ) ?>"
                                     class="heart-button"
-                                    aria-label="Apply for <?= htmlspecialchars($job["job_title"]) ?>"
+                                    aria-label="Apply for <?= htmlspecialchars(
+                                        $job["job_title"]
+                                    ) ?>"
                                 >
                                     <img
                                         src="styles/images/heart.png"
@@ -171,25 +267,40 @@ include("nav.inc");
                             </div>
 
                             <p class="organisation-name">
-                                <?= htmlspecialchars($job["organisation"]) ?>
+                                <?= htmlspecialchars(
+                                    $job["organisation"]
+                                ) ?>
                             </p>
 
                             <div class="job-meta">
+
                                 <span>
-                                    📍 <?= htmlspecialchars($job["location"]) ?>
+                                    📍
+                                    <?= htmlspecialchars(
+                                        $job["location"]
+                                    ) ?>
                                 </span>
 
                                 <span>
-                                    ◌ <?= htmlspecialchars($job["employment_type"]) ?>
+                                    ◌
+                                    <?= htmlspecialchars(
+                                        $job["employment_type"]
+                                    ) ?>
                                 </span>
 
                                 <span>
-                                    ◷ <?= htmlspecialchars($job["work_type"]) ?>
+                                    ◷
+                                    <?= htmlspecialchars(
+                                        $job["work_type"]
+                                    ) ?>
                                 </span>
+
                             </div>
 
                             <p class="job-summary">
-                                <?= htmlspecialchars($job["summary"]) ?>
+                                <?= htmlspecialchars(
+                                    $job["summary"]
+                                ) ?>
                             </p>
 
                             <?php if (!empty($skill_tags)): ?>
@@ -197,9 +308,13 @@ include("nav.inc");
                                 <div class="skill-tags">
 
                                     <?php foreach ($skill_tags as $tag): ?>
+
                                         <span>
-                                            <?= htmlspecialchars(trim($tag)) ?>
+                                            <?= htmlspecialchars(
+                                                trim($tag)
+                                            ) ?>
                                         </span>
+
                                     <?php endforeach; ?>
 
                                 </div>
@@ -210,11 +325,15 @@ include("nav.inc");
 
                                 <p class="salary">
                                     Salary:
-                                    <?= htmlspecialchars($job["salary"]) ?>
+                                    <?= htmlspecialchars(
+                                        $job["salary"]
+                                    ) ?>
                                 </p>
 
                                 <a
-                                    href="#<?= htmlspecialchars($details_id) ?>"
+                                    href="#<?= htmlspecialchars(
+                                        $details_id
+                                    ) ?>"
                                     class="view-details"
                                 >
                                     View Details
@@ -234,8 +353,11 @@ include("nav.inc");
                 <?php endforeach; ?>
 
                 <p class="job-count">
-                    Showing <?= $job_count ?> of
-                    <?= $job_count ?> available opportunities
+                    Showing
+                    <?= $job_count ?>
+                    of
+                    <?= $job_count ?>
+                    available opportunities
                 </p>
 
             <?php else: ?>
@@ -251,16 +373,27 @@ include("nav.inc");
         <aside class="jobs-sidebar">
 
             <section class="sidebar-box">
+
                 <h2>Explore Roles</h2>
 
                 <?php foreach ($jobs as $job): ?>
 
                     <?php
-                    $details_id = "job-" . strtolower($job["job_ref"]) . "-details";
+                    $details_id =
+                        "job-" .
+                        strtolower($job["job_ref"]) .
+                        "-details";
                     ?>
 
-                    <a href="#<?= htmlspecialchars($details_id) ?>">
-                        <?= htmlspecialchars($job["job_title"]) ?>
+                    <a
+                        href="#<?= htmlspecialchars(
+                            $details_id
+                        ) ?>"
+                    >
+                        <?= htmlspecialchars(
+                            $job["job_title"]
+                        ) ?>
+
                         <span>›</span>
                     </a>
 
@@ -276,7 +409,9 @@ include("nav.inc");
                     class="talent-icon"
                 >
 
-                <h2>Join our talent community</h2>
+                <h2>
+                    Join our talent community
+                </h2>
 
                 <p>
                     Get early updates about future roles, workshops,
@@ -306,92 +441,145 @@ include("nav.inc");
         <?php foreach ($jobs as $job): ?>
 
             <?php
-            $details_id = "job-" . strtolower($job["job_ref"]) . "-details";
+            $details_id =
+                "job-" .
+                strtolower($job["job_ref"]) .
+                "-details";
 
             $responsibilities = array_filter(
-                explode("|", $job["responsibilities"])
+                explode(
+                    "|",
+                    $job["responsibilities"]
+                )
             );
 
             $essential_requirements = array_filter(
-                explode("|", $job["essential_requirements"])
+                explode(
+                    "|",
+                    $job["essential_requirements"]
+                )
             );
 
             $preferable_requirements = array_filter(
-                explode("|", $job["preferable_requirements"])
+                explode(
+                    "|",
+                    $job["preferable_requirements"]
+                )
             );
             ?>
 
             <article
                 class="detail-card"
-                id="<?= htmlspecialchars($details_id) ?>"
+                id="<?= htmlspecialchars(
+                    $details_id
+                ) ?>"
             >
 
-                <p class="eyebrow">POSITION DETAILS</p>
+                <p class="eyebrow">
+                    POSITION DETAILS
+                </p>
 
                 <h2>
-                    <?= htmlspecialchars($job["job_title"]) ?>
+                    <?= htmlspecialchars(
+                        $job["job_title"]
+                    ) ?>
                 </h2>
 
                 <p>
-                    <?= htmlspecialchars($job["summary"]) ?>
+                    <?= htmlspecialchars(
+                        $job["summary"]
+                    ) ?>
                 </p>
 
                 <div class="detail-grid">
 
                     <section>
+
                         <h3>Reporting line</h3>
 
                         <p>
-                            <?= htmlspecialchars($job["reporting_line"]) ?>
+                            <?= htmlspecialchars(
+                                $job["reporting_line"]
+                            ) ?>
                         </p>
+
                     </section>
 
                     <section>
+
                         <h3>Key responsibilities</h3>
 
                         <ol>
-                            <?php foreach ($responsibilities as $responsibility): ?>
+
+                            <?php foreach (
+                                $responsibilities
+                                as $responsibility
+                            ): ?>
 
                                 <li>
-                                    <?= htmlspecialchars(trim($responsibility)) ?>
+                                    <?= htmlspecialchars(
+                                        trim($responsibility)
+                                    ) ?>
                                 </li>
 
                             <?php endforeach; ?>
+
                         </ol>
+
                     </section>
 
                     <section>
+
                         <h3>Essential requirements</h3>
 
                         <ul>
-                            <?php foreach ($essential_requirements as $requirement): ?>
+
+                            <?php foreach (
+                                $essential_requirements
+                                as $requirement
+                            ): ?>
 
                                 <li>
-                                    <?= htmlspecialchars(trim($requirement)) ?>
+                                    <?= htmlspecialchars(
+                                        trim($requirement)
+                                    ) ?>
                                 </li>
 
                             <?php endforeach; ?>
+
                         </ul>
+
                     </section>
 
                     <section>
+
                         <h3>Preferable requirements</h3>
 
                         <ul>
-                            <?php foreach ($preferable_requirements as $requirement): ?>
+
+                            <?php foreach (
+                                $preferable_requirements
+                                as $requirement
+                            ): ?>
 
                                 <li>
-                                    <?= htmlspecialchars(trim($requirement)) ?>
+                                    <?= htmlspecialchars(
+                                        trim($requirement)
+                                    ) ?>
                                 </li>
 
                             <?php endforeach; ?>
+
                         </ul>
+
                     </section>
 
                 </div>
 
                 <a
-                    href="apply.php?job_ref=<?= urlencode($job["job_ref"]) ?>"
+                    href="apply.php?job_ref=<?= urlencode(
+                        $job["job_ref"]
+                    ) ?>"
                     class="primary-button"
                 >
                     Apply for this role
